@@ -72,8 +72,6 @@ def testing_component(area, stream, test_string, module_name, requests):
     elif (stream == "server"):
         threadList = ["Thread-1", "Thread-2", "Thread-3", "Thread-4"]
         requests = requests * 2
-    
-    # x = random.poisson(lam=2, size=10)
 
     if (stream == "single stream" or stream == "multi stream" or stream == "server"):
         #change to 1024 later
