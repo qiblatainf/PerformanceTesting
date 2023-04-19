@@ -5,6 +5,7 @@ import queue
 import threading
 import time
 import yappi
+from numpy import random
 from Speech import Speech_Test, Speech_Libraries
 # from scalene import scalene_profiler
 
@@ -56,57 +57,75 @@ def testing_component(area, stream, test_string, module_name, requests):
             time.sleep(1)
 
     #4 threads
-    if (stream == "multi thread"):
+    if (stream == "multi stream"):
         threadList = ["Thread-1", "Thread-2", "Thread-3", "Thread-4"]
-    elif (stream == "single thread"):
+    elif (stream == "single stream"):
         threadList = ["Thread-1"]
+    elif (stream == "server"):
+        threadList = ["Thread-1", "Thread-2", "Thread-3", "Thread-4"]
+        requests = requests * 2
+    
+    # x = random.poisson(lam=2, size=10)
 
-    #change to 1024 later
-    nameList = [test_string] * requests
-    queueLock = threading.Lock()
+    if (stream == "single stream" or stream == "multi stream" or stream == "server"):
+        #change to 1024 later
+        nameList = [test_string] * requests
+        queueLock = threading.Lock()
 
-    #queue size will be 1024
-    workQueue = queue.Queue(requests)
-    threads = []
-    threadID = 1
+        #queue size will be 1024
+        workQueue = queue.Queue(requests)
+        threads = []
+        threadID = 1
 
-    # scalene_profiler.start()
-    yappi.start()
+        # scalene_profiler.start()
+        yappi.start()
 
-    # Create new threads
-    for tName in threadList:
-        thread = myThread(threadID, tName, workQueue, test_string, module_name, area)
-        thread.start()
-        threads.append(thread)
-        threadID += 1
+        # Create new threads
+        for tName in threadList:
+            thread = myThread(threadID, tName, workQueue, test_string, module_name, area)
+            thread.start()
+            threads.append(thread)
+            threadID += 1
 
-    # Fill the queue
-    queueLock.acquire()
-    for word in nameList:
-        workQueue.put(word)
-    queueLock.release()
+        # Fill the queue
+        queueLock.acquire()
+        for word in nameList:
+            workQueue.put(word)
+        queueLock.release()
 
-    # Wait for queue to empty
-    while not workQueue.empty():
-        pass
+        # Wait for queue to empty
+        while not workQueue.empty():
+            pass
 
-    # Notify threads it's time to exit
-    exitFlag = 1
+        # Notify threads it's time to exit
+        exitFlag = 1
 
-    # Wait for all threads to complete
-    for t in threads:
-        t.join()
-    print("Exiting Main Thread")
+        # Wait for all threads to complete
+        for t in threads:
+            t.join()
+        print("Exiting Main Thread")
 
-    yappi.stop()
+        yappi.stop()
+    
+    if (stream == "offline"):
+        yappi.start()
+        if (area == "speech"):
+            
+            for i in range(requests):
+                test_string = Speech_Test(module_name, test_string)
+                Speech_Libraries(module_name, test_string)
+        yappi.stop()
+                
+            
+        
     stop = time.time()
 
     print("")
     print("CPU Usage:")
     yappi.get_thread_stats().print_all()
 
-
+    print("")
     print("Time Consumed (Latency): {} secs".format(stop - start))
 
 
-testing_component("speech", "single thread", "small", "better_profanity", 5 )
+testing_component("speech", "offline", "small", "better_profanity", 5 )
