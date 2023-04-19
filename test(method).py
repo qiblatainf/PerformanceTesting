@@ -15,18 +15,11 @@ from Speech import Speech_Test, Speech_Libraries
 # module_name = "better_profanity"
 # requests = 5 #N-samples
 
-class TestingComponent:
+def testing_component(area, stream, test_string, module_name, requests):
     start = time.time()
     exitFlag = 0
     yappi.set_clock_type("CPU") #can be wall clock as well
     warnings.filterwarnings("ignore")
-    
-    def __init__(self, area, stream, test_string, module_name, requests):
-        self.area= area
-        self.stream = stream
-        self.test_string = test_string
-        self.module_name = module_name
-        self.requests = requests
     
     class myThread (threading.Thread):
         def __init__(self, threadID, name, q, test_string, module_name, area):
@@ -72,7 +65,7 @@ class TestingComponent:
             time.sleep(delay)
 
     #4 threads
-    if (self.stream == "multi stream"):
+    if (stream == "multi stream"):
         threadList = ["Thread-1", "Thread-2", "Thread-3", "Thread-4"]
     elif (stream == "single stream"):
         threadList = ["Thread-1"]
@@ -138,4 +131,4 @@ class TestingComponent:
     print("Time Consumed (Latency): {} secs".format(stop - start))
 
 
-t1 = TestingComponent("speech", "server", "small", "better_profanity", 5) 
+testing_component("speech", "server", "small", "better_profanity", 5 )
