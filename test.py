@@ -34,27 +34,35 @@ def testing_component(area, stream, test_string, module_name, requests):
         def run(self):
             print("Starting " + self.name)
             
+            #Conditions for all areas
             if (area == "speech"):
                 self.test_string = Speech_Test(module_name, test_string)
+                
+            #Setting Timer Delay
+            if (stream == "multi stream"):
+                delay = 5
+            if (stream == "server"):
+                delay = random.poisson(lam=2, size=1)[0]
+            else:
+                delay = 1
             
-            process_data(self.name, self.q, self.test_string, self.module_name, self.area)
+            process_data(self.name, self.q, self.test_string, self.module_name, self.area, delay)
             print("Exiting " + self.name)
 
-    def process_data(threadName, q, test_string, module_name, area):
+    def process_data(threadName, q, test_string, module_name, area, delay):
         while not exitFlag:
             queueLock.acquire()
             if not workQueue.empty():
                 data = q.get()
                 print("%s processing %s on module %s" % (threadName, data, module_name))
-                # lib = libraries()
+                
                 if (area == "speech"):
                     Speech_Libraries(module_name, test_string)
 
-                
                 queueLock.release()   
             else:
                 queueLock.release()
-            time.sleep(1)
+            time.sleep(delay)
 
     #4 threads
     if (stream == "multi stream"):
@@ -109,14 +117,11 @@ def testing_component(area, stream, test_string, module_name, requests):
     
     if (stream == "offline"):
         yappi.start()
-        if (area == "speech"):
-            
+        if (area == "speech"):            
             for i in range(requests):
                 test_string = Speech_Test(module_name, test_string)
                 Speech_Libraries(module_name, test_string)
-        yappi.stop()
-                
-            
+        yappi.stop()  
         
     stop = time.time()
 
@@ -128,4 +133,4 @@ def testing_component(area, stream, test_string, module_name, requests):
     print("Time Consumed (Latency): {} secs".format(stop - start))
 
 
-testing_component("speech", "offline", "small", "better_profanity", 5 )
+testing_component("speech", "server", "small", "better_profanity", 5 )
