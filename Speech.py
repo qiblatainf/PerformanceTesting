@@ -16,9 +16,12 @@ def Speech_Test(module_name, test_string):
         return test_string
     
 def Speech_Libraries(module_name, test_string): 
-          
+    
+    import sys
+    # caution: path[0] is reserved for script path (or '' in REPL)
+    # sys.path.insert(1, '/ProfanityDetectionLibraries')      
     if (module_name == "better_profanity"):
-        from better_profanity_detector import detect
+        from ProfanityDetectionLibraries.better_profanity_detector import detect
         detect(test_string) 
     elif (module_name == "profanity_filter"):
         from profanity_filter_detector import detect
