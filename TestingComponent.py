@@ -6,7 +6,9 @@ import threading
 import time
 import yappi
 from numpy import random
-from Speech import Speech_Test, Speech_Libraries
+# from Speech import Speech_Test, Speech_Libraries
+from Speech.SpeechLibraries import SpeechLibrary
+from Speech.SpeechTestData import SpeechData
 # from scalene import scalene_profiler
 
 # area = "speech"
@@ -36,7 +38,8 @@ def testing_component(area, stream, test_string, module_name, requests):
             
             #Conditions for all areas
             if (area == "speech"):
-                self.test_string = Speech_Test(module_name, test_string)
+                # self.test_string = Speech_Test(module_name, test_string)
+                self.test_string = SpeechData(module_name, test_string).test_data()
                 
             #Setting Timer Delay
             if (stream == "multi stream"):
@@ -57,7 +60,8 @@ def testing_component(area, stream, test_string, module_name, requests):
                 print("%s processing %s on module %s" % (threadName, data, module_name))
                 
                 if (area == "speech"):
-                    Speech_Libraries(module_name, test_string)
+                    # Speech_Libraries(module_name, test_string)
+                    SpeechLibrary(module_name, test_string).lib()
 
                 queueLock.release()   
             else:
@@ -145,5 +149,5 @@ class TestingComponent(object):
     def func(self):
         myfunc = testing_component(self.area, self.stream, self.test_string, self.module_name, self.requests)
 
-t1 = TestingComponent("speech", "server", "small", "better_profanity", 5) 
+t1 = TestingComponent("speech", "single stream", "small", "better_profanity", 5) 
 t1.func()
