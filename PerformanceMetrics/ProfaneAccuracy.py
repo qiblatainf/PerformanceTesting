@@ -10,23 +10,23 @@ class ProfaneAccuracy:
         # adding folder to the system path
         sys.path.insert(0, 'D://PerformanceTesting//')
 
-        from Speech.SpeechLibraries import SpeechLibrary
-        from Speech.SpeechTestData import SpeechData
+        from Text.TextLibraries import TextLibrary
+        from Text.TextTestData import TextData
 
-        s = SpeechData(self.module_name, "small").test_data()
-        m = SpeechData(self.module_name, "medium").test_data()
-        l = SpeechData(self.module_name, "large").test_data()
+        s = TextData(self.module_name, "small").test_data()
+        m = TextData(self.module_name, "medium").test_data()
+        l = TextData(self.module_name, "large").test_data()
 
-        s = SpeechLibrary(self.module_name, s).lib()
-        m = SpeechLibrary(self.module_name, m).lib()
-        l = SpeechLibrary(self.module_name, l).lib()
+        s = TextLibrary(self.module_name, s).lib()
+        m = TextLibrary(self.module_name, m).lib()
+        l = TextLibrary(self.module_name, l).lib()
 
         pred = [s, m, l]
-        print(pred)
+        # print(pred)
         true = [True, True, False]
-        print(true)
+        # print(true)
 
         accuracy = accuracy_score(pred, true)
         return "Accuracy of " + self.module_name + " " + str(round(accuracy*100,2)) + "%"
 
-print(ProfaneAccuracy("better_profanity").accuracy())
+# print(ProfaneAccuracy("better_profanity").accuracy())
