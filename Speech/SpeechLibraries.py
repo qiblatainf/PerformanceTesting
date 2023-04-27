@@ -7,14 +7,14 @@ class SpeechLibrary:
           
     def lib(self): 
         if (self.module_name == "better_profanity"):
-            from ProfanityDetectionLibraries.better_profanity_detector import detect
-            detect(self.test_string) 
+            from Speech.ProfanityDetectionLibraries.better_profanity_detector import detect
+            return detect(self.test_string) 
         elif (self.module_name == "profanity_filter"):
-            from profanity_filter_detector import detect
-            detect(self.test_string)
+            from Speech.ProfanityDetectionLibraries.profanity_filter_detector import detect
+            return detect(self.test_string)
         elif(self.module_name == "profanityfilter"):
-            from profanityfilter_detector import detect
-            detect(self.test_string)
+            from Speech.ProfanityDetectionLibraries.profanityfilter_detector import detect
+            return detect(self.test_string)
         elif(self.module_name == "profanity"):
-            from profanity_detector import detect
-            detect(self.test_string)
+            from Speech.ProfanityDetectionLibraries.profanity_detector import detect
+            return detect(self.test_string)

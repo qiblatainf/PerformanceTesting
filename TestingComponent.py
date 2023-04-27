@@ -35,12 +35,14 @@ def testing_component(area, stream, test_string, module_name, requests):
         
         def run(self):
             print("Starting " + self.name)
+            print("Test string: " + self.test_string)
             
             #Conditions for all areas
             if (area == "speech"):
                 # self.test_string = Speech_Test(module_name, test_string)
-                self.test_string = SpeechData(module_name, test_string).test_data()
+                self.test_string = SpeechData(module_name, self.test_string).test_data()
                 
+            print("Test string now: " + self.test_string)
             #Setting Timer Delay
             if (stream == "multi stream"):
                 delay = 5
@@ -62,6 +64,8 @@ def testing_component(area, stream, test_string, module_name, requests):
                 if (area == "speech"):
                     # Speech_Libraries(module_name, test_string)
                     SpeechLibrary(module_name, test_string).lib()
+                    # print(test_string)
+                    # print(SpeechLibrary(module_name, test_string).lib())
 
                 queueLock.release()   
             else:
@@ -149,5 +153,5 @@ class TestingComponent(object):
     def func(self):
         myfunc = testing_component(self.area, self.stream, self.test_string, self.module_name, self.requests)
 
-t1 = TestingComponent("speech", "single stream", "small", "better_profanity", 5) 
+t1 = TestingComponent("speech", "single stream", "large", "profanityfilter", 5) 
 t1.func()
