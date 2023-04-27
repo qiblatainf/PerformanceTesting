@@ -1,33 +1,29 @@
-from sklearn.metrics import accuracy_score
-# import os
-# os.chdir("D://PerformanceTesting//")
+class ProfaneAccuracy:
+    def __init__(self, module_name):
+        self.module_name = module_name
+        
+    def accuracy(self):
+        
+        from sklearn.metrics import accuracy_score
+        import sys
+        
+        # adding folder to the system path
+        sys.path.insert(0, 'D://PerformanceTesting//')
 
+        from Speech.SpeechLibraries import SpeechLibrary
+        from Speech.SpeechTestData import SpeechData
 
-import sys
- 
-# adding Folder_2 to the system path
-sys.path.insert(0, 'D://PerformanceTesting//')
+        s = SpeechData(self.module_name, "small").test_data()
+        m = SpeechData(self.module_name, "medium").test_data()
+        l = SpeechData(self.module_name, "large").test_data()
 
-from Speech.SpeechLibraries import SpeechLibrary
-from Speech.SpeechTestData import SpeechData
+        s = SpeechLibrary(self.module_name, s).lib()
+        m = SpeechLibrary(self.module_name, m).lib()
+        l = SpeechLibrary(self.module_name, l).lib()
 
-module_name = "profanityfilter"
-# accuracy_score(labels_test,pred)
+        test = [s, m, l]
+        pred = [True, True, False]
 
-s = SpeechData(module_name, "small").test_data()
-m = SpeechData(module_name, "medium").test_data()
-l = SpeechData(module_name, "large").test_data()
+        accuracy = accuracy_score(test,pred)
+        return "Accuracy of " + self.module_name + " " + str(round(accuracy*100,2)) + "%"
 
-s = SpeechLibrary(module_name, s).lib()
-m = SpeechLibrary(module_name, m).lib()
-l = SpeechLibrary(module_name, l).lib()
-
-# print(s)
-
-test = [s, m, l]
-print(test)
-pred = [True, True, False]
-print(pred)
-
-accuracy = accuracy_score(test,pred)
-print(round(accuracy*100,2))

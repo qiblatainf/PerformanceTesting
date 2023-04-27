@@ -9,6 +9,7 @@ from numpy import random
 # from Speech import Speech_Test, Speech_Libraries
 from Speech.SpeechLibraries import SpeechLibrary
 from Speech.SpeechTestData import SpeechData
+from PerformanceMetrics.ProfaneAccuracy import ProfaneAccuracy
 # from scalene import scalene_profiler
 
 # area = "speech"
@@ -35,14 +36,14 @@ def testing_component(area, stream, test_string, module_name, requests):
         
         def run(self):
             print("Starting " + self.name)
-            print("Test string: " + self.test_string)
+            # print("Test string: " + self.test_string)
             
             #Conditions for all areas
             if (area == "speech"):
                 # self.test_string = Speech_Test(module_name, test_string)
                 self.test_string = SpeechData(module_name, self.test_string).test_data()
                 
-            print("Test string now: " + self.test_string)
+            # print("Test string now: " + self.test_string)
             #Setting Timer Delay
             if (stream == "multi stream"):
                 delay = 5
@@ -64,6 +65,7 @@ def testing_component(area, stream, test_string, module_name, requests):
                 if (area == "speech"):
                     # Speech_Libraries(module_name, test_string)
                     SpeechLibrary(module_name, test_string).lib()
+                    
                     # print(test_string)
                     # print(SpeechLibrary(module_name, test_string).lib())
 
@@ -150,8 +152,13 @@ class TestingComponent(object):
         self.module_name = module_name
         self.requests = requests
     
-    def func(self):
+    def utilization(self):
         myfunc = testing_component(self.area, self.stream, self.test_string, self.module_name, self.requests)
+        
+    def performance_metrics(self):        
+        if ("prof" in self.module_name):
+            return ProfaneAccuracy(self.module_name).accuracy()
 
-t1 = TestingComponent("speech", "single stream", "large", "profanityfilter", 5) 
-t1.func()
+t1 = TestingComponent("speech", "single stream", "large", "better_profanity", 5) 
+t1.utilization()
+print(t1.performance_metrics())
