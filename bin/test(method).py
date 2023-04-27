@@ -6,10 +6,10 @@ import threading
 import time
 import yappi
 from numpy import random
-from Speech import Speech_Test, Speech_Libraries
+from Text import Text_Test, Text_Libraries
 # from scalene import scalene_profiler
 
-# area = "speech"
+# area = "Text"
 # stream = "multi thread"
 # test_string= "small"
 # module_name = "better_profanity"
@@ -35,8 +35,8 @@ def testing_component(area, stream, test_string, module_name, requests):
             print("Starting " + self.name)
             
             #Conditions for all areas
-            if (area == "speech"):
-                self.test_string = Speech_Test(module_name, test_string)
+            if (area == "Text"):
+                self.test_string = Text_Test(module_name, test_string)
                 
             #Setting Timer Delay
             if (stream == "multi stream"):
@@ -56,8 +56,8 @@ def testing_component(area, stream, test_string, module_name, requests):
                 data = q.get()
                 print("%s processing %s on module %s" % (threadName, data, module_name))
                 
-                if (area == "speech"):
-                    Speech_Libraries(module_name, test_string)
+                if (area == "Text"):
+                    Text_Libraries(module_name, test_string)
 
                 queueLock.release()   
             else:
@@ -115,10 +115,10 @@ def testing_component(area, stream, test_string, module_name, requests):
     
     if (stream == "offline"):
         yappi.start()
-        if (area == "speech"):            
+        if (area == "Text"):            
             for i in range(requests):
-                test_string = Speech_Test(module_name, test_string)
-                Speech_Libraries(module_name, test_string)
+                test_string = Text_Test(module_name, test_string)
+                Text_Libraries(module_name, test_string)
         yappi.stop()  
         
     stop = time.time()
@@ -131,4 +131,4 @@ def testing_component(area, stream, test_string, module_name, requests):
     print("Time Consumed (Latency): {} secs".format(stop - start))
 
 
-testing_component("speech", "server", "small", "better_profanity", 5 )
+testing_component("Text", "server", "small", "better_profanity", 5 )

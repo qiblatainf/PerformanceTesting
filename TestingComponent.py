@@ -6,12 +6,13 @@ import threading
 import time
 import yappi
 from numpy import random
-# from Speech import Speech_Test, Speech_Libraries
-from Speech.SpeechLibraries import SpeechLibrary
-from Speech.SpeechTestData import SpeechData
+# from Text import Text_Test, Text_Libraries
+from Text.TextLibraries import TextLibrary
+from Text.TextTestData import TextData
+from PerformanceMetrics.ProfaneAccuracy import ProfaneAccuracy
 # from scalene import scalene_profiler
 
-# area = "speech"
+# area = "Text"
 # stream = "multi thread"
 # test_string= "small"
 # module_name = "better_profanity"
@@ -35,12 +36,14 @@ def testing_component(area, stream, test_string, module_name, requests):
         
         def run(self):
             print("Starting " + self.name)
+            # print("Test string: " + self.test_string)
             
             #Conditions for all areas
-            if (area == "speech"):
-                # self.test_string = Speech_Test(module_name, test_string)
-                self.test_string = SpeechData(module_name, test_string).test_data()
+            if (area == "Text"):
+                # self.test_string = Text_Test(module_name, test_string)
+                self.test_string = TextData(module_name, self.test_string).test_data()
                 
+            # print("Test string now: " + self.test_string)
             #Setting Timer Delay
             if (stream == "multi stream"):
                 delay = 5
@@ -57,11 +60,14 @@ def testing_component(area, stream, test_string, module_name, requests):
             queueLock.acquire()
             if not workQueue.empty():
                 data = q.get()
-                print("%s processing %s on module %s" % (threadName, data, module_name))
+                print("%s processing %s data on module %s" % (threadName, data, module_name))
                 
-                if (area == "speech"):
-                    # Speech_Libraries(module_name, test_string)
-                    SpeechLibrary(module_name, test_string).lib()
+                if (area == "Text"):
+                    # Text_Libraries(module_name, test_string)
+                    TextLibrary(module_name, test_string).lib()
+                    
+                    # print(test_string)
+                    # print(TextLibrary(module_name, test_string).lib())
 
                 queueLock.release()   
             else:
@@ -119,10 +125,10 @@ def testing_component(area, stream, test_string, module_name, requests):
     
     if (stream == "offline"):
         yappi.start()
-        if (area == "speech"):            
+        if (area == "Text"):            
             for i in range(requests):
-                test_string = Speech_Test(module_name, test_string)
-                Speech_Libraries(module_name, test_string)
+                test_string = Text_Test(module_name, test_string)
+                Text_Libraries(module_name, test_string)
         yappi.stop()  
         
     stop = time.time()
@@ -135,7 +141,7 @@ def testing_component(area, stream, test_string, module_name, requests):
     print("Time Consumed (Latency): {} secs".format(stop - start))
 
 
-# testing_component("speech", "server", "small", "better_profanity", 5 )
+# testing_component("Text", "server", "small", "better_profanity", 5 )
 
 class TestingComponent(object):
         
@@ -146,8 +152,13 @@ class TestingComponent(object):
         self.module_name = module_name
         self.requests = requests
     
-    def func(self):
+    def utilization(self):
         myfunc = testing_component(self.area, self.stream, self.test_string, self.module_name, self.requests)
+        
+    def performance_metrics(self):        
+        if ("prof" in self.module_name):
+            return ProfaneAccuracy(self.module_name).accuracy()
 
-t1 = TestingComponent("speech", "single stream", "small", "better_profanity", 5) 
-t1.func()
+t1 = TestingComponent("Text", "single stream", "large", "better_profanity", 1) 
+t1.utilization()
+print(t1.performance_metrics())
