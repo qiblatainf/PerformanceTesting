@@ -159,6 +159,6 @@ class TestingComponent(object):
         if ("prof" in self.module_name):
             return ProfaneAccuracy(self.module_name).accuracy()
 
-t1 = TestingComponent("speech", "single stream", "large", "better_profanity", 5) 
+t1 = TestingComponent("speech", "single stream", "large", "better_profanity", 1) 
 t1.utilization()
 print(t1.performance_metrics())

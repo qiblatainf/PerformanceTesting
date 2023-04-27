@@ -21,9 +21,12 @@ class ProfaneAccuracy:
         m = SpeechLibrary(self.module_name, m).lib()
         l = SpeechLibrary(self.module_name, l).lib()
 
-        test = [s, m, l]
-        pred = [True, True, False]
+        pred = [s, m, l]
+        print(pred)
+        true = [True, True, False]
+        print(true)
 
-        accuracy = accuracy_score(test,pred)
+        accuracy = accuracy_score(pred, true)
         return "Accuracy of " + self.module_name + " " + str(round(accuracy*100,2)) + "%"
 
+print(ProfaneAccuracy("better_profanity").accuracy())
