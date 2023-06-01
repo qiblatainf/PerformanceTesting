@@ -9,7 +9,13 @@ from numpy import random
 # from Text import Text_Test, Text_Libraries
 from Text.TextLibraries import TextLibrary
 from Text.TextTestData import TextData
+
+from Speech.SpeechLibraries import SpeechLibrary
+from Speech.SpeechTestData import SpeechData 
+
 from PerformanceMetrics.ProfaneAccuracy import ProfaneAccuracy
+from PerformanceMetrics.SimilarityScore import SimilarityScore
+
 # from scalene import scalene_profiler
 
 # area = "Text"
@@ -39,9 +45,11 @@ def testing_component(area, stream, test_string, module_name, requests):
             # print("Test string: " + self.test_string)
             
             #Conditions for all areas
-            if (area == "Text"):
+            if (area == "text"):
                 # self.test_string = Text_Test(module_name, test_string)
                 self.test_string = TextData(module_name, self.test_string).test_data()
+            elif (area == "speech"):
+                self.test_string = SpeechData(module_name, self.test_string).test_data()
                 
             # print("Test string now: " + self.test_string)
             #Setting Timer Delay
@@ -62,9 +70,11 @@ def testing_component(area, stream, test_string, module_name, requests):
                 data = q.get()
                 print("%s processing %s data on module %s" % (threadName, data, module_name))
                 
-                if (area == "Text"):
+                if (area == "text"):
                     # Text_Libraries(module_name, test_string)
                     TextLibrary(module_name, test_string).lib()
+                elif (area == "speech"):
+                    SpeechLibrary(module_name, test_string).lib()
                     
                     # print(test_string)
                     # print(TextLibrary(module_name, test_string).lib())
@@ -125,7 +135,7 @@ def testing_component(area, stream, test_string, module_name, requests):
     
     if (stream == "offline"):
         yappi.start()
-        if (area == "Text"):            
+        if (area == "text"):            
             for i in range(requests):
                 test_string = Text_Test(module_name, test_string)
                 Text_Libraries(module_name, test_string)
@@ -158,7 +168,13 @@ class TestingComponent(object):
     def performance_metrics(self):        
         if ("prof" in self.module_name):
             return ProfaneAccuracy(self.module_name).accuracy()
+        elif ("transcribe" in self.module_name):
+            return SimilarityScore(self.module_name, self.test_string).similarity_score()
 
-t1 = TestingComponent("Text", "single stream", "large", "better_profanity", 1) 
-t1.utilization()
-print(t1.performance_metrics())
+t1 = TestingComponent("text", "single stream", "large", "better_profanity", 1) 
+# t1.utilization()
+# print(t1.performance_metrics())
+
+t2 = TestingComponent("speech", "single stream", "small", "google_transcribe", 1) 
+t2.utilization()
+t2.performance_metrics()
