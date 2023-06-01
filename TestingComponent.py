@@ -14,6 +14,7 @@ from Speech.SpeechLibraries import SpeechLibrary
 from Speech.SpeechTestData import SpeechData 
 
 from PerformanceMetrics.ProfaneAccuracy import ProfaneAccuracy
+from PerformanceMetrics.SimilarityScore import SimilarityScore
 
 # from scalene import scalene_profiler
 
@@ -167,6 +168,8 @@ class TestingComponent(object):
     def performance_metrics(self):        
         if ("prof" in self.module_name):
             return ProfaneAccuracy(self.module_name).accuracy()
+        elif ("transcribe" in self.module_name):
+            return SimilarityScore(self.module_name).similarity_score()
 
 t1 = TestingComponent("text", "single stream", "large", "better_profanity", 1) 
 # t1.utilization()
@@ -174,3 +177,4 @@ t1 = TestingComponent("text", "single stream", "large", "better_profanity", 1)
 
 t2 = TestingComponent("speech", "single stream", "small", "google_transcribe", 1) 
 t2.utilization()
+t2.performance_metrics()
