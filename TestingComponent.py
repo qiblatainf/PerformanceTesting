@@ -169,7 +169,7 @@ class TestingComponent(object):
         if ("prof" in self.module_name):
             return ProfaneAccuracy(self.module_name).accuracy()
         elif ("transcribe" in self.module_name):
-            return SimilarityScore(self.module_name).similarity_score()
+            return SimilarityScore(self.module_name, self.test_string).similarity_score()
 
 t1 = TestingComponent("text", "single stream", "large", "better_profanity", 1) 
 # t1.utilization()

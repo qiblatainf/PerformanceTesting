@@ -9,8 +9,8 @@ class SpeechData:
                 self.test_audio = "./Speech/test-data/small.wav"
             elif(self.test_audio == "medium"):
                 self.test_audio = "./Speech/test-data/medium.wav"
-            elif (self.test_string == "large"):
-                self.test_audio = "Not supported"
+            elif (self.test_audio == "large"):
+                self.test_audio = "Not supported yet"
                 
             return self.test_audio
         

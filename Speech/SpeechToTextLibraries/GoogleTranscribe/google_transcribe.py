@@ -10,13 +10,6 @@ import time
 import warnings
 warnings.filterwarnings("ignore")
 
-# ray.init(num_cpus = 4) 
-# start = time.time()
-
-# file_path = "D:/PerformanceTesting/Speech/test-data/small.wav"
-
-# @profile(precision= 4)
-# @ray.remote
 def transcribe(file_path):
     #accessing the json key file
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "D:\PerformanceTesting\Speech\SpeechToTextLibraries\GoogleTranscribe\google-key.json"
@@ -38,28 +31,3 @@ def transcribe(file_path):
     response = client.recognize(config=config, audio=audio)
     for result in response.results:
         return result.alternatives[0].transcript
-    
-    # print(result)
-    with open('./Speech/SpeechToTextLibraries/GoogleTranscribe/results/small_result.txt', 'w', encoding='utf-8') as f:
-        f.write(result)
-        
-# STT = transcribe(file_path) 
-# STT = transcribe.remote(file_path)
-# result = ray.get(STT)
-# print(STT)
-# path = file_path
-# lp = LineProfiler()
-# lp_wrapper = lp(transcribe)
-# lp_wrapper(path)
-# lp.print_stats()
-
-# print("آپ کیسے ہو")
-
-# with open('./Speech/SpeechToTextLibraries/GoogleTranscribe/results/small_result.txt', 'w', encoding='utf-8') as f:
-#     f.write(STT)
- 
-# check_similarity("very small", STT)
-# print(result)
-# stop = time.time()
-
-# print("Time Consumed (Latency): {} secs".format(stop - start))
