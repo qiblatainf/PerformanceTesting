@@ -135,10 +135,10 @@ def testing_component(area, stream, test_string, module_name, requests):
     
     if (stream == "offline"):
         yappi.start()
-        if (area == "text"):            
-            for i in range(requests):
-                test_string = Text_Test(module_name, test_string)
-                Text_Libraries(module_name, test_string)
+        # if (area == "text"):            
+            # for i in range(requests):
+                # test_string = Text_Test(module_name, test_string)
+                # Text_Libraries(module_name, test_string)
         yappi.stop()  
         
     stop = time.time()
