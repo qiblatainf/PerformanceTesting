@@ -48,9 +48,9 @@ def testing_component(area, stream, test_string, module_name, requests):
             if (area == "text"):
                 # self.test_string = Text_Test(module_name, test_string)
                 self.test_string = TextData(module_name, self.test_string).test_data()
-            elif (area == "speech"):
+            elif (area == "speech" and self.test_string != "large"):
                 self.test_string = SpeechData(module_name, self.test_string).test_data()
-                
+            
             # print("Test string now: " + self.test_string)
             #Setting Timer Delay
             if (stream == "multi stream"):
@@ -73,12 +73,14 @@ def testing_component(area, stream, test_string, module_name, requests):
                 if (area == "text"):
                     # Text_Libraries(module_name, test_string)
                     TextLibrary(module_name, test_string).lib()
-                elif (area == "speech"):
+                elif (area == "speech" and test_string != "large"):
                     SpeechLibrary(module_name, test_string).lib()
                     
                     # print(test_string)
                     # print(TextLibrary(module_name, test_string).lib())
-
+                if (test_string == "large"):
+                    print("EXCEPTION: Audio files greater than 2 minutes not supported.")
+                
                 queueLock.release()   
             else:
                 queueLock.release()
@@ -135,10 +137,10 @@ def testing_component(area, stream, test_string, module_name, requests):
     
     if (stream == "offline"):
         yappi.start()
-        if (area == "text"):            
-            for i in range(requests):
-                test_string = Text_Test(module_name, test_string)
-                Text_Libraries(module_name, test_string)
+        # if (area == "text"):            
+            # for i in range(requests):
+                # test_string = Text_Test(module_name, test_string)
+                # Text_Libraries(module_name, test_string)
         yappi.stop()  
         
     stop = time.time()
@@ -168,13 +170,13 @@ class TestingComponent(object):
     def performance_metrics(self):        
         if ("prof" in self.module_name):
             return ProfaneAccuracy(self.module_name).accuracy()
-        elif ("transcribe" in self.module_name):
+        elif ("transcribe" in self.module_name and self.test_string != "large"):
             return SimilarityScore(self.module_name, self.test_string).similarity_score()
 
 t1 = TestingComponent("text", "single stream", "large", "better_profanity", 1) 
 # t1.utilization()
 # print(t1.performance_metrics())
 
-t2 = TestingComponent("speech", "single stream", "small", "google_transcribe", 1) 
+t2 = TestingComponent("speech", "single stream", "large", "google_transcribe", 1) 
 t2.utilization()
 t2.performance_metrics()
