@@ -18,5 +18,24 @@ class TextData:
                 self.test_string = check_text3 
                 
             return self.test_string
+        elif (self.module_name == "google_translate"):
+            n = 0
+            if (self.test_string == "small"):
+                n = 80
+            elif(self.test_string == "medium"):
+                n = 400
+            elif (self.test_string == "large"):
+                n = 1000
+            
+            lines = ''
+            with open('data/translationDatasets/urduDataset.txt', 'r', encoding='utf-8') as f:
+                for i in range(n):
+                    line = f.readline()
+                    if not line:
+                        break
+                    lines += line.strip()
+                    if i < n-1:
+                        lines += ' / '
+            return lines
         
             

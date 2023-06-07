@@ -172,3 +172,5 @@ pyrightconfig.json
 
 main.py
 *.pyc
+
+flagged
