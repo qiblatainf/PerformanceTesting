@@ -180,3 +180,5 @@ t1 = TestingComponent("text", "single stream", "large", "better_profanity", 1)
 t2 = TestingComponent("speech", "single stream", "large", "google_transcribe", 1) 
 t2.utilization()
 t2.performance_metrics()
+
+t3 = TestingComponent("video", "single stream", "small", "nsfw_mobilenet", 1)
