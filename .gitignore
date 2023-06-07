@@ -172,3 +172,7 @@ pyrightconfig.json
 
 main.py
 *.pyc
+
+__pycache__
+
+Speech/SpeechToTextLibraries/GoogleTranscribe/google-key.json
