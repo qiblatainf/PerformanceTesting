@@ -2,4 +2,5 @@
 _pycache_/
 
 
-Speech/SpeechToTextLibraries/GoogleTranscribe/google-key.json
+# Speech/SpeechToTextLibraries/GoogleTranscribe/google-key.json
+Video/src/__pycache__
