@@ -13,6 +13,9 @@ from Text.TextTestData import TextData
 from Speech.SpeechLibraries import SpeechLibrary
 from Speech.SpeechTestData import SpeechData 
 
+from Video.VideoLibraries import VideoLibrary
+from  Video.VideoTestData import VideoData 
+
 from PerformanceMetrics.ProfaneAccuracy import ProfaneAccuracy
 from PerformanceMetrics.SimilarityScore import SimilarityScore
 
@@ -50,6 +53,8 @@ def testing_component(area, stream, test_string, module_name, requests):
                 self.test_string = TextData(module_name, self.test_string).test_data()
             elif (area == "speech" and self.test_string != "large"):
                 self.test_string = SpeechData(module_name, self.test_string).test_data()
+            elif (area == "video"):
+                self.test_string = Video
             
             # print("Test string now: " + self.test_string)
             #Setting Timer Delay
