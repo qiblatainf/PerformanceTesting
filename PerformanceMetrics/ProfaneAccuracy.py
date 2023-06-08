@@ -8,7 +8,7 @@ class ProfaneAccuracy:
         import sys
         
         # adding folder to the system path
-        sys.path.insert(0, 'D://PerformanceTesting//')
+        sys.path.insert(1, 'D://PerformanceTesting//')
 
         from Text.TextLibraries import TextLibrary
         from Text.TextTestData import TextData
