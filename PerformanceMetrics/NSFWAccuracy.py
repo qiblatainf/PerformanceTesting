@@ -1,6 +1,3 @@
-
-        
-
 class NSFWAccuracy:
     def __init__(self, module_name, test_video):
         self.module_name = module_name
@@ -12,6 +9,7 @@ class NSFWAccuracy:
         
         # adding folder to the system path
         sys.path.insert(1, '.\\Video\\')
+        # print(sys.path)
 
         from VideoLibraries import VideoLibrary
         from VideoTestData import VideoData
@@ -26,14 +24,15 @@ class NSFWAccuracy:
             string = "NOT SAFE"
             
         # s = VideoLibrary(self.module_name, s).lib()
-
+        # print("output = " + str(video))
         pred = [video]
-        true = [100]
+        true = [100.0]
         
         accuracy = accuracy_score(pred, true)
-        return "Accuracy of " + self.module_name + " " + str(round(accuracy*100,2)) + "%"
+        print("Accuracy of " + self.module_name + ": " + str(round(accuracy*100,2)) + "%")
+        # return "Accuracy of " + self.module_name + " " + str(round(accuracy*100,2)) + "%"
         
  
 # print(ProfaneAccuracy("better_profanity").accuracy())
-s1 = NSFWAccuracy("nsfw_mobilenet", "small")
+s1 = NSFWAccuracy("efficientnet", "small")
 s1.nsfw_accuracy()
