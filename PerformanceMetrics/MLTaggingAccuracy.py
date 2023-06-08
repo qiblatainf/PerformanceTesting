@@ -4,7 +4,7 @@ class MLTaggingAccuracy:
         self.test_string = test_string
         
     def accuracy_score(self):
-        from Image.ImageModels import ImageModels
+        from Image.ImageLibraries import ImageModels
         from Image.ImageTestData import ImageData
 
         self.test_string = ImageData(self.module_name, self.test_string).test_data()

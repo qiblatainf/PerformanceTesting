@@ -16,13 +16,7 @@ def detect(test_string):
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
 
-    n = 0
-    if (test_string == "smallImageSet"):
-        n = 15
-    elif (test_string == "mediumImageSet"):
-        n = 60
-    elif (test_string == "largeImageSet"):
-        n = 120
+    n = test_string
 
     preds = []
 

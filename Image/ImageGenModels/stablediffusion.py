@@ -11,13 +11,7 @@ def detect(test_string):
     
     prompt = "beautiful landscape, high quality"
 
-    n = 0
-    if (test_string == "smallPromptSet"):
-        n = 5
-    elif (test_string == "mediumPromptSet"):
-        n = 15
-    elif (test_string == "largePromptSet"):
-        n = 30
+    n = test_string
 
     for i in range(0, n):
         def query(payload):

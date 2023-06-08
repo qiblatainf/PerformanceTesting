@@ -13,7 +13,7 @@ from Text.TextTestData import TextData
 from Speech.SpeechLibraries import SpeechLibrary
 from Speech.SpeechTestData import SpeechData 
 
-from Image.ImageModels import ImageModels
+from Image.ImageLibraries import ImageModels
 from Image.ImageTestData import ImageData
 
 from PerformanceMetrics.ProfaneAccuracy import ProfaneAccuracy
@@ -162,7 +162,6 @@ def testing_component(area, stream, test_string, module_name, requests):
     print("Time Consumed (Latency): {} secs".format(stop - start))
 
 # testing_component("Text", "server", "small", "better_profanity", 5 )
-
 class TestingComponent(object):     
     def __init__(self, area, stream, test_string, module_name, requests):
         self.area= area
