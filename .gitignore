@@ -3,4 +3,8 @@ _pycache_/
 
 
 # Speech/SpeechToTextLibraries/GoogleTranscribe/google-key.json
-Video/src/__pycache__
+Video/src/__pycache__/
+
+Text/src/__pycache__/
+
+.vscode
