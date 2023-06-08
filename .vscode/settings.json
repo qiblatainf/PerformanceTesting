@@ -1,8 +1,8 @@
 {
     "git-blame.gitWebUrl": "",
-    "python.analysis.extraPaths": [
-        "./Video/src/inference",
-        "./Video/src/inference",
-        "./Video"
-    ]
+    // "python.analysis.extraPaths": [
+    //     "./Video/src/inference",
+    //     "./Video/src/inference",
+    //     "./Video"
+    // ]
 }
