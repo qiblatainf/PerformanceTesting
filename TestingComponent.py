@@ -13,6 +13,9 @@ from Text.TextTestData import TextData
 from Speech.SpeechLibraries import SpeechLibrary
 from Speech.SpeechTestData import SpeechData 
 
+from Video.VideoLibraries import VideoLibrary
+from  Video.VideoTestData import VideoData 
+
 from PerformanceMetrics.ProfaneAccuracy import ProfaneAccuracy
 from PerformanceMetrics.SimilarityScore import SimilarityScore
 
@@ -50,6 +53,8 @@ def testing_component(area, stream, test_string, module_name, requests):
                 self.test_string = TextData(module_name, self.test_string).test_data()
             elif (area == "speech" and self.test_string != "large"):
                 self.test_string = SpeechData(module_name, self.test_string).test_data()
+            elif (area == "video"):
+                self.test_string = VideoData(module_name, self.test_string).test_data()
             
             # print("Test string now: " + self.test_string)
             #Setting Timer Delay
@@ -75,6 +80,10 @@ def testing_component(area, stream, test_string, module_name, requests):
                     TextLibrary(module_name, test_string).lib()
                 elif (area == "speech" and test_string != "large"):
                     SpeechLibrary(module_name, test_string).lib()
+                elif (area == "video"):
+                    VideoLibrary(module_name, test_string).lib()
+                
+                
                     
                     # print(test_string)
                     # print(TextLibrary(module_name, test_string).lib())
@@ -178,5 +187,8 @@ t1 = TestingComponent("text", "single stream", "large", "better_profanity", 1)
 # print(t1.performance_metrics())
 
 t2 = TestingComponent("speech", "single stream", "large", "google_transcribe", 1) 
-t2.utilization()
-t2.performance_metrics()
+# t2.utilization()
+# t2.performance_metrics()
+
+t3 = TestingComponent("video", "single stream", "small", "nsfw_mobilenet", 1)
+t3.utilization()
