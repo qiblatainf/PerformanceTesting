@@ -13,12 +13,19 @@ from Text.TextTestData import TextData
 from Speech.SpeechLibraries import SpeechLibrary
 from Speech.SpeechTestData import SpeechData 
 
+
+from Image.ImageLibraries import ImageModels
+from Image.ImageTestData import ImageData
+
 from Video.VideoLibraries import VideoLibrary
 from  Video.VideoTestData import VideoData 
 
+
 from PerformanceMetrics.ProfaneAccuracy import ProfaneAccuracy
 from PerformanceMetrics.SimilarityScore import SimilarityScore
-
+from PerformanceMetrics.BleuScore import BleuScore
+from PerformanceMetrics.MLTaggingAccuracy import MLTaggingAccuracy
+from PerformanceMetrics.FIDScore import FIDScore
 # from scalene import scalene_profiler
 
 # area = "Text"
@@ -53,6 +60,8 @@ def testing_component(area, stream, test_string, module_name, requests):
                 self.test_string = TextData(module_name, self.test_string).test_data()
             elif (area == "speech" and self.test_string != "large"):
                 self.test_string = SpeechData(module_name, self.test_string).test_data()
+            elif (area == "image"):
+                self.test_string = ImageData(module_name, self.test_string).test_data()
             elif (area == "video"):
                 self.test_string = VideoData(module_name, self.test_string).test_data()
             
@@ -80,10 +89,10 @@ def testing_component(area, stream, test_string, module_name, requests):
                     TextLibrary(module_name, test_string).lib()
                 elif (area == "speech" and test_string != "large"):
                     SpeechLibrary(module_name, test_string).lib()
+                if (area == "image"):
+                    ImageModels(module_name, test_string).lib()
                 elif (area == "video"):
                     VideoLibrary(module_name, test_string).lib()
-                
-                
                     
                     # print(test_string)
                     # print(TextLibrary(module_name, test_string).lib())
@@ -161,11 +170,8 @@ def testing_component(area, stream, test_string, module_name, requests):
     print("")
     print("Time Consumed (Latency): {} secs".format(stop - start))
 
-
 # testing_component("Text", "server", "small", "better_profanity", 5 )
-
-class TestingComponent(object):
-        
+class TestingComponent(object):     
     def __init__(self, area, stream, test_string, module_name, requests):
         self.area= area
         self.stream = stream
@@ -181,10 +187,38 @@ class TestingComponent(object):
             return ProfaneAccuracy(self.module_name).accuracy()
         elif ("transcribe" in self.module_name and self.test_string != "large"):
             return SimilarityScore(self.module_name, self.test_string).similarity_score()
+        elif ("translate" in self.module_name): # Translation
+            return BleuScore(self.module_name, self.test_string).bleu_score()
+        elif ("net" in self.module_name): # Auto tagging
+            return MLTaggingAccuracy(self.module_name, self.test_string).accuracy_score()
+        elif ("GAN" in self.module_name): # Generative AI
+            return FIDScore(self.module_name, self.test_string).fid_score()
 
-t1 = TestingComponent("text", "single stream", "large", "better_profanity", 1) 
+# -------- Profanity Detection --------
+# t1 = TestingComponent("text", "single stream", "large", "better_profanity", 1) 
 # t1.utilization()
 # print(t1.performance_metrics())
+
+# -------- Transcription (needs API credidentials) --------
+# t2 = TestingComponent("speech", "single stream", "large", "google_transcribe", 1) 
+# t2.utilization()
+# t2.performance_metrics()'
+
+# -------- Translation (needs API credidentials) --------
+# t1 = TestingComponent("text", "single stream", "small", "google_translate", 1) 
+# t1.utilization()
+# print(t1.performance_metrics())
+
+# -------- Image Classification --------
+# t1 = TestingComponent("image", "single stream", "small", "mobilenetv2", 1) 
+# t1.utilization()
+# print(t1.performance_metrics())
+
+# -------- Image Generation (needs API credidentials) --------
+# t1 = TestingComponent("image", "single stream", "small", "stablediffusionGAN", 1) 
+# t1.utilization()
+# print(t1.performance_metrics())
+
 
 t2 = TestingComponent("speech", "single stream", "large", "google_transcribe", 1) 
 # t2.utilization()
@@ -192,3 +226,4 @@ t2 = TestingComponent("speech", "single stream", "large", "google_transcribe", 1
 
 t3 = TestingComponent("video", "single stream", "small", "nsfw_mobilenet", 1)
 t3.utilization()
+

@@ -7,4 +7,8 @@ Video/src/__pycache__/
 
 Text/src/__pycache__/
 
+
+main.py
+*.pyc
+flagged
 .vscode

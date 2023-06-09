@@ -18,3 +18,8 @@ class TextLibrary:
         elif(self.module_name == "profanity"):
             from Text.ProfanityDetectionLibraries.profanity_detector import detect
             return detect(self.test_string)
+        elif(self.module_name == "google_translate"):
+            from Text.TranslationLibraries.google_translate import detect
+            return detect(self.test_string)
+        else:
+            print("Module " + self.module_name + " not found")
